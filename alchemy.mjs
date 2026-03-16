@@ -44,6 +44,9 @@ if (response.challengeId === 1) {
   const two = 2;
   answer = two + two;
 }
+if (response.challengeId === 2) {
+  answer = "pi";
+}
 const submitResponse = await (
   await fetch(submitURL, {
     method: "POST",
