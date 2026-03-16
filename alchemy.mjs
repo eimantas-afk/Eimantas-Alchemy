@@ -39,6 +39,16 @@ response = await (
 
 console.log("Current challenge", response);
 
+function runCircuit(A, B, C, D, E) {
+  const outA = (A & B) | (!C ? 1 : 0);
+
+  const xorCD = C ^ D;
+  const andDE = D & E;
+  const outB = !(xorCD & andDE) ? 1 : 0;
+
+  return `${outA}${outB}`;
+}
+
 let answer = null;
 if (response.challengeId === 1) {
   const two = 2;
@@ -53,7 +63,26 @@ if (response.challengeId === 3) {
 if (response.challengeId === 4) {
   answer = "SILVER";
 }
+if (response.challengeId === 5) {
+  const binary = "01110110011001010101010101100011010010101100101";
+  let result = "";
 
+  for (let i = 0; i < binary.length; i += 5) {
+    const group = binary.slice(i, i + 5);
+
+    if (group.length < 5) break;
+
+    const A = Number(group[0]);
+    const B = Number(group[1]);
+    const C = Number(group[2]);
+    const D = Number(group[3]);
+    const E = Number(group[4]);
+
+    result += runCircuit(A, B, C, D, E);
+  }
+
+  answer = result;
+}
 const submitResponse = await (
   await fetch(submitURL, {
     method: "POST",
