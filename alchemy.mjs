@@ -49,6 +49,20 @@ function runCircuit(A, B, C, D, E) {
   return `${outA}${outB}`;
 }
 
+function decodeSubstitution(text, cipherAlphabet) {
+  const normalAlphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+  let result = "";
+  for (const char of text) {
+    const index = cipherAlphabet.indexOf(char);
+    if (index === -1) {
+      result += char;
+    } else {
+      result += normalAlphabet[index];
+    }
+  }
+  return result;
+}
+
 let answer = null;
 if (response.challengeId === 1) {
   const two = 2;
@@ -82,6 +96,11 @@ if (response.challengeId === 5) {
   }
 
   answer = result;
+}
+if (response.challengeId === 6) {
+  const cipherAlphabet = "QFMBTHLCZPRSKVJXDGUWOYAEIN";
+  const encoded = "UZSYTG MJXXTG LJSB STQB";
+  answer = decodeSubstitution(encoded, cipherAlphabet);
 }
 const submitResponse = await (
   await fetch(submitURL, {
