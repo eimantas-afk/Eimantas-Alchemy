@@ -38,3 +38,33 @@ response = await (
 ).json();
 
 console.log("Current challenge", response);
+
+let answer = null;
+if (response.challengeId === 1) {
+  const two = 2;
+  answer = two + two;
+}
+const submitResponse = await (
+  await fetch(submitURL, {
+    method: "POST",
+    headers: {
+      Authorization: token,
+      "Content-Type": "application/json",
+      Accept: "application/json",
+    },
+    body: JSON.stringify({ answer }),
+  })
+).json();
+console.log("Submit result:", submitResponse);
+
+const nextResponse = await (
+  await fetch(statusURL, {
+    method: "GET",
+    headers: {
+      Accept: "application/json",
+      Authorization: token,
+    },
+  })
+).json();
+
+console.log("Next challenge:", nextResponse);
