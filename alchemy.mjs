@@ -47,6 +47,9 @@ if (response.challengeId === 1) {
 if (response.challengeId === 2) {
   answer = "pi";
 }
+if (response.challengeId === 3) {
+  answer = "GoldQuicksilverSilverIronGold";
+}
 const submitResponse = await (
   await fetch(submitURL, {
     method: "POST",
